@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+
+<script type="module">
+
+import { Node } from '../src/node.js'
+
+let n1 = new Node({ name: 'n1' })
+let n2 = new Node({ name: 'n2' })
+let n3 = new Node({ name: 'n3' })
+let n4 = new Node({ name: 'n4' })
+
+n1.appendChild(n2)
+n1.appendChild(n3)
+n1.appendChild(n4)
+
+console.log([...n1].map(child => child.name))
+
+n1.removeChild(n3)
+
+console.log([...n1].map(child => child.name))
+
+n3.attach(n4)
+
+console.log([...n1.allChildren()].map(child => child.name))
+
+n2.appendChild(new Node().appendChild(new Node()).appendChild(new Node()).appendChild(new Node()))
+n2.appendChild(new Node())
+
+console.log(n1.print())
+
+</script>
+
+</body>
+</html>
