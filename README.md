@@ -1,6 +1,13 @@
 # js-tree
-Minimal code to implement a tree (graph) in javascript (es2015)  
-Features:  
+Minimal code to implement a tree (graph) in javascript (es2015)  
+```
+──┬─ Node#0 {}
+  ├─┬─ Node#1 {}
+  │ └─── Node#2 {}
+  └─── Node#3 {}
+```
+
+## Features:  
 - iteration: 
 ```javascript
 for (let child of parentNode) 
@@ -43,7 +50,7 @@ let myInstance = new MyClass()
 myInstance.appendTo(myNode)
 ```
 
-# basic usage
+## basic usage
 example:
 
 ```javascript
@@ -86,7 +93,14 @@ console.log(n1.print())
 ```
 
 more complex graph (drawing hierarchy test):
-```
+```javascript
+n2.append(new Node().append(new Node()).append(new Node().append(new Node().append(new Node())).append(new Node()).append(new Node().append(new Node()))))
+n2.append(new Node(), new Node(), new Node())
+
+console.log(n1.print())
+
+/* ouput:
+
 ──┬─ Node#0 {}
   ├─┬─ Node#1 {}
   │ ├─── Node#2 {}
@@ -102,4 +116,6 @@ more complex graph (drawing hierarchy test):
   │ ├─── Node#13 {}
   │ └─── Node#14 {}
   └─── Node#3 {}
+  
+*/
 ```
