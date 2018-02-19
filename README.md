@@ -34,7 +34,7 @@ node.remove(anotherNode)
 // ===
 anotherNode.detach() 
 ```
-- graph view:
+- graph preview:
 ```javascript
 console.log(node.print())
 ```
