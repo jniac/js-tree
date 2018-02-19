@@ -8,7 +8,6 @@ class Node {
 		Object.defineProperty(this, 'uid', { enumerable: true, value: nodeUID++ })
 
 		this.root = this
-		this.level = 0
 
 		Object.assign(this, props)
 
@@ -20,26 +19,29 @@ class Node {
 
 	}
 
-	appendChild(child) {
+	append(...children) {
 
-		if (child.parent)
-			removeChild(child.parent, child)
+		for (let child of children) {
 
-		child.parent = this
-		child.root = this.root
-		child.level = this.level + 1
+			if (child.parent)
+				child.parent.remove(child)
 
-		if (this.lastChild) {
+			child.parent = this
+			child.root = this.root
 
-			this.lastChild.next = child
-			child.previous = this.lastChild
+			if (this.lastChild) {
 
-			this.lastChild = child
+				this.lastChild.next = child
+				child.previous = this.lastChild
 
-		} else {
+				this.lastChild = child
 
-			this.firstChild = 
-			this.lastChild = child
+			} else {
+
+				this.firstChild = 
+				this.lastChild = child
+
+			}
 
 		}
 
@@ -47,35 +49,60 @@ class Node {
 
 	}
 
-	removeChild(child) {
+	remove(...children) {
 
-		if (this.lastChild === child)
-			this.lastChild = child.previous
+		for (let child of children) {
 
-		if (this.firstChild === child)
-			this.firstChild = child.next
+			if (this.lastChild === child)
+				this.lastChild = child.previous
 
-		let { previous, next } = child
+			if (this.firstChild === child)
+				this.firstChild = child.next
 
-		if (previous)
-			previous.next = next
+			let { previous, next } = child
 
-		if (next)
-			next.previous = previous
+			if (previous)
+				previous.next = next
 
-		child.parent = null
-		child.root = null
-		child.previous = null
-		child.next = null
-		child.level = 0
+			if (next)
+				next.previous = previous
+
+			child.parent = null
+			child.root = null
+			child.previous = null
+			child.next = null
+
+		}
 
 		return this
 
 	}
 
-	attach(parent) {
+	removeAll() {
 
-		parent.appendChild(this)
+		let child = this.firstChild
+
+		while (child) {
+
+			child.parent = null
+			child.root = null
+			child.previous = null
+			child.next = null
+
+			child = child.next
+
+		}
+
+		this.firstChild = null
+		this.lastChild = null
+
+		return this
+
+	}
+
+	appendTo(parent) {
+
+		parent.append(this)
 
 		return this
 
@@ -84,7 +111,7 @@ class Node {
 	detach() {
 
 		if (this.parent)
-			this.parent.removeChild(this)
+			this.parent.remove(this)
 
 		return this
 

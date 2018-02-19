@@ -3,10 +3,34 @@ Minimal code to implement a tree (graph) in javascript (es2015)
 Features:  
 - iteration: 
 ```javascript
-for (let child of parentNode) ...
+for (let child of parentNode) 
+    ...
 ```
-- deep iteration: `for (let anyChild of parentNode.allChildren()) ...`
-- chain style & easy one-or-several methods : `node.appendChild(new Node(), new Node(), new Node()).appendTo(anotherNode)`
+- deep iteration: 
+```javascript
+for (let anyChild of parentNode.allChildren()) 
+    ...
+```
+- chain style & easy one-or-several methods : 
+```javascript
+node
+    .append(new Node(), new Node(), new Node())
+    .appendTo(anotherNode)
+```
+- *reversible point of view*:
+```javascript
+node.append(anotherNode) 
+// ===
+anotherNode.appendTo(node)
+
+node.remove(anotherNode) 
+// ===
+anotherNode.detach() 
+```
+- graph view:
+```javascript
+console.log(node.print())
+```
 
 
 
@@ -30,13 +54,13 @@ let n2 = new Node({ name: 'node 2' })
 let n3 = new Node()
 let n4 = new Node({ name: 'may the forth be with you'})
 
-n1.appendChild(n2)
-n1.appendChild(n3)
-n1.appendChild(n4)
+n1.append(n2)
+n1.append(n3)
+n1.append(n4)
 
-n1.removeChild(n3) // === n3.detach()
+n1.remove(n3) // === n3.detach()
 
-n3.appendTo(n2) // === n2.appendChild(n3)
+n3.appendTo(n2) // === n2.append(n3)
 
 for (let child of n1)
   console.log(child.name)
@@ -69,9 +93,13 @@ more complex graph (drawing hierarchy test):
   │ ├─┬─ Node#4 {}
   │ │ ├─── Node#5 {}
   │ │ └─┬─ Node#6 {}
-  │ │   ├─── Node#7 {}
-  │ │   ├─── Node#8 {}
-  │ │   └─── Node#9 {}
-  │ └─── Node#10 {}
+  │ │   ├─┬─ Node#7 {}
+  │ │   │ └─── Node#8 {}
+  │ │   ├─── Node#9 {}
+  │ │   └─┬─ Node#10 {}
+  │ │     └─── Node#11 {}
+  │ ├─── Node#12 {}
+  │ ├─── Node#13 {}
+  │ └─── Node#14 {}
   └─── Node#3 {}
 ```

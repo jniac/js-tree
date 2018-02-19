@@ -9,29 +9,33 @@
 
 import { Node } from '../src/node.js'
 
-let n1 = new Node({ name: 'n1' })
-let n2 = new Node({ name: 'n2' })
-let n3 = new Node({ name: 'n3' })
-let n4 = new Node({ name: 'n4' })
+let n1 = new Node({ name: 'node 1' })
+let n2 = new Node({ name: 'node 2' })
+let n3 = new Node({ name: 'node 3' })
+let n4 = new Node({ name: 'may the forth be with you'})
 
-n1.appendChild(n2)
-n1.appendChild(n3)
-n1.appendChild(n4)
+n1.append(n2)
+n1.append(n3)
+n1.append(n4)
 
-console.log([...n1].map(child => child.name))
+n1.remove(n3)
 
-n1.removeChild(n3)
+n3.appendTo(n2)
 
-console.log([...n1].map(child => child.name))
-
-n3.attach(n4)
-
-console.log([...n1.allChildren()].map(child => child.name))
-
-n2.appendChild(new Node().appendChild(new Node()).appendChild(new Node()).appendChild(new Node()))
-n2.appendChild(new Node())
+for (let child of n1)
+  console.log(child.name)
 
 console.log(n1.print())
+
+n2.append(new Node().append(new Node()).append(new Node().append(new Node().append(new Node())).append(new Node()).append(new Node().append(new Node()))))
+n2.append(new Node(), new Node(), new Node())
+
+console.log(n1.print())
+
+n1.removeAll()
+
+console.log(n1.print())
+
 
 </script>
 
