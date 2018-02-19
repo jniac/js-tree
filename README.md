@@ -24,7 +24,7 @@ node
     .append(new Node(), new Node(), new Node())
     .appendTo(anotherNode)
 ```
-- *reversible point of view*:
+- *'reversible point of view'*:
 ```javascript
 node.append(anotherNode) 
 // ===
@@ -37,6 +37,15 @@ anotherNode.detach()
 - graph preview:
 ```javascript
 console.log(node.print())
+
+/* something in the following form:
+
+──┬─ Node#0 {}
+  ├─┬─ Node#1 {}
+  │ └─── Node#2 {}
+  └─── Node#3 {}
+
+*/
 ```
 
 
