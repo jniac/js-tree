@@ -1,5 +1,14 @@
 # js-tree
-Minimal code to implement a tree (graph) in javascript  
+Minimal code to implement a tree (graph) in javascript (es2015)  
+Features:  
+- iteration: 
+```javascript
+for (let child of parentNode) ...
+```
+- deep iteration: `for (let anyChild of parentNode.allChildren()) ...`
+- chain style & easy one-or-several methods : `node.appendChild(new Node(), new Node(), new Node()).appendTo(anotherNode)`
+
+
 
 **QUESTION:**  
 Should node methods be available for existing objects / classes?  
