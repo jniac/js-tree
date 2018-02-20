@@ -5,6 +5,41 @@
 </head>
 <body>
 
+<div class="console"><pre></pre></div>
+
+<script type="text/javascript">
+
+(function(){
+
+	let consoleLog = console.log
+	let pre = document.querySelector('.console pre')
+	
+	let style = document.createElement('style')
+	style.innerHTML = `
+		.console pre div {
+			padding: 4px 0;
+		}
+		.console pre div + div {
+			border-top: 1px #eee solid;
+		}
+	`
+	document.head.appendChild(style)
+
+	console.log = function(...args) {
+
+		consoleLog(...args)
+
+		let div = document.createElement('div')
+		div.innerHTML = args.join(' ') + '\n'
+
+		pre.appendChild(div)
+
+	}
+
+})()
+	
+</script>
+
 <script type="module">
 
 import { Node } from '../src/node.js'
@@ -29,6 +64,8 @@ console.log(n1.print())
 
 n2.append(new Node().append(new Node()).append(new Node().append(new Node().append(new Node())).append(new Node()).append(new Node().append(new Node()))))
 n2.append(new Node(), new Node(), new Node())
+
+n1.walk(node => console.log('walk', node.printLine()))
 
 console.log(n1.print())
 

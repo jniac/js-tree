@@ -117,6 +117,10 @@ class Node {
 
 	}
 
+
+
+	// iteration:
+
 	*[Symbol.iterator]() {
 
 		let child = this.firstChild
@@ -157,6 +161,22 @@ class Node {
 			yield node
 
 			node = node.parent
+
+		}
+
+	}
+
+	walk(callback) {
+
+		callback(this)
+
+		let child = this.firstChild
+
+		while(child) {
+
+			child.walk(callback)
+
+			child = child.next
 
 		}
 
