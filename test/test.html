@@ -69,6 +69,11 @@ n1.walk(node => console.log('walk', node.printLine()))
 
 console.log(n1.print())
 
+console.log('n3.isChildOf(n1)', n3.isChildOf(n1))
+console.log('n1.isChildOf(n3)', n1.isChildOf(n3))
+console.log('n1.isParentOf(n3)', n1.isParentOf(n3))
+console.log('n3.isParentOf(n1)', n3.isParentOf(n1))
+
 n1.removeAll()
 
 console.log(n1.print())

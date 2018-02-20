@@ -117,9 +117,46 @@ class Node {
 
 	}
 
+	walk(callback) {
 
+		callback(this)
 
-	// iteration:
+		let child = this.firstChild
+
+		while(child) {
+
+			child.walk(callback)
+
+			child = child.next
+
+		}
+
+	}
+
+	// test:
+
+	isParentOf(node) {
+
+		while (node) {
+
+			if (node.parent === this)
+				return true
+
+			node = node.parent
+
+		}
+
+		return false
+
+	}
+
+	isChildOf(node) {
+
+		return node.isParentOf(this)
+
+	}
+
+	// iterators:
 
 	*[Symbol.iterator]() {
 
@@ -161,22 +198,6 @@ class Node {
 			yield node
 
 			node = node.parent
-
-		}
-
-	}
-
-	walk(callback) {
-
-		callback(this)
-
-		let child = this.firstChild
-
-		while(child) {
-
-			child.walk(callback)
-
-			child = child.next
 
 		}
 
