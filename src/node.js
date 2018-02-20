@@ -13,12 +13,6 @@ class Node {
 
 	}
 
-	isDetached() {
-
-		return !this.root && !this.parent && !this.next && !this.previous
-
-	}
-
 	append(...children) {
 
 		for (let child of children) {
@@ -134,6 +128,12 @@ class Node {
 	}
 
 	// test:
+
+	isDetached() {
+
+		return !this.root && !this.parent && !this.next && !this.previous
+
+	}
 
 	isParentOf(node) {
 
