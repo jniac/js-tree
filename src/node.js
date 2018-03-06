@@ -62,7 +62,7 @@ class Node {
 				next.previous = previous
 
 			child.parent = null
-			child.root = null
+			child.root = child
 			child.previous = null
 			child.next = null
 
@@ -79,7 +79,7 @@ class Node {
 		while (child) {
 
 			child.parent = null
-			child.root = null
+			child.root = child
 			child.previous = null
 			child.next = null
 
@@ -129,9 +129,15 @@ class Node {
 
 	// test:
 
-	isDetached() {
+	get isRoot() {
 
-		return !this.root && !this.parent && !this.next && !this.previous
+		return this.root === this
+
+	}
+
+	get isDetached() {
+
+		return this.root === this && !this.parent && !this.next && !this.previous
 
 	}
 
