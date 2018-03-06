@@ -34,7 +34,12 @@ node.remove(anotherNode)
 // ===
 anotherNode.detach() 
 ```
-- graph preview:
+- walk:
+```javascript
+root.walk(node => ...)
+```
+
+- graph string preview:
 ```javascript
 console.log(node.print())
 
@@ -51,6 +56,7 @@ console.log(node.print())
 
 
 **QUESTION:**  
+**Universality**  
 Should node methods be available for existing objects / classes?  
 eg: 
 ```javascript

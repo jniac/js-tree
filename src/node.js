@@ -127,7 +127,7 @@ class Node {
 
 	}
 
-	// test:
+	// hierarchy test:
 
 	get isRoot() {
 
@@ -161,6 +161,8 @@ class Node {
 		return node.isParentOf(this)
 
 	}
+
+
 
 	// iterators:
 
@@ -208,6 +210,10 @@ class Node {
 		}
 
 	}
+
+
+
+	// print:
 
 	printLine() {
 
