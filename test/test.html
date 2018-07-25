@@ -9,11 +9,11 @@
 
 <script type="text/javascript">
 
-(function(){
+(function() {
 
 	let consoleLog = console.log
 	let pre = document.querySelector('.console pre')
-	
+
 	let style = document.createElement('style')
 	style.innerHTML = `
 		.console pre div {
@@ -37,12 +37,12 @@
 	}
 
 })()
-	
+
 </script>
 
 <script type="module">
 
-import { Node } from '../src/node.js'
+import { Node } from '../src/tree.js'
 
 let n1 = new Node({ name: 'node 1' })
 let n2 = new Node({ name: 'node 2' })

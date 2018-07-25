@@ -32,7 +32,7 @@ class Node {
 
 			} else {
 
-				this.firstChild = 
+				this.firstChild =
 				this.lastChild = child
 
 			}
@@ -104,8 +104,15 @@ class Node {
 
 	detach() {
 
-		if (this.parent)
+		if (this.parent) {
+
 			this.parent.remove(this)
+
+		} else {
+
+			// detach from sibling
+
+		}
 
 		return this
 
