@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title>Array vs Property</title>
+		<script src="https://rawgit.com/jniac/js-bench/master/bench.js" charset="utf-8"></script>
+    </head>
+    <body>
+        <script type="text/javascript">
+
+		const PRNG = (seed = 12345) => {
+
+			seed %= 2147483647
+
+			if (seed < 0)
+				seed += 2147483647
+
+			const next = () => (seed = seed * 16807 % 2147483647)
+
+			const float = ({ min = 0, max = 1 } = {}) => (
+
+				min + (max - min) * (next() - 1) / 2147483646
+
+			)
+
+			return { float }
+
+		}
+
+		let Node1Count = 0
+
+		class Node1 {
+
+			constructor(data) {
+
+				this.uid = Node1Count++
+
+				this.data = data
+
+				this.root = this
+				this.parent = null
+				this.count = 0
+				this.total = 1
+				this.depth = 0
+
+				this.children = []
+
+			}
+
+			append(...children) {
+
+				for (let child of children) {
+
+					child.root = this.root
+					child.parent = this
+					child.depth = this.depth + 1
+
+					this.children.push(child)
+					this.count = this.children.length
+					this.root.total++
+
+				}
+
+			}
+
+			detach() {
+
+				if (!this.parent)
+					return
+
+				this.parent.count--
+				this.root.total--
+
+				let index = this.parent.children.indexOf(this)
+				this.parent.children.splice(index, 1)
+
+				this.depth = 0
+				this.parent = null
+				this.previous = null
+				this.root = this
+
+				return this
+
+			}
+
+			walk(callback) {
+
+				callback(this)
+
+				for (let child of this.children) {
+
+					child.walk(callback)
+
+				}
+
+			}
+
+			reduce(array = []) {
+
+				array.push(this)
+
+				for (let child of this.children) {
+
+					child.reduce(array)
+
+				}
+
+				return array
+
+			}
+
+		}
+
+
+
+
+		let Node2Count = 0
+
+		class Node2 {
+
+			constructor(data) {
+
+				this.uid = Node2Count++
+
+				this.data = data
+
+				this.root = this
+				this.parent = null
+				this.count = 0
+				this.total = 1
+				this.depth = 0
+
+				this.first = null
+				this.last = null
+
+				this.previous = null
+				this.next = null
+
+			}
+
+			deepClone(parent = null) {
+
+				let node = new Node2()
+
+				Object.assign(node, this)
+
+			}
+
+			append(...children) {
+
+				for (let child of children) {
+
+					child.root = this.root
+					child.parent = this
+					child.depth = this.depth + 1
+
+					if (!this.first) {
+
+						this.last = child
+						this.first = child
+
+					} else {
+
+						child.previous = this.last
+						this.last.next = child
+						this.last = child
+
+					}
+
+					this.count++
+					this.root.total++
+
+				}
+
+			}
+
+			detach() {
+
+				if (!this.parent)
+					return
+
+				this.parent.count--
+				this.root.total--
+
+				if (this.previous)
+					this.previous.next = this.next
+
+				if (this.next)
+					this.next.previous = this.previous
+
+				this.depth = 0
+				this.parent = null
+				this.previous = null
+				this.next = null
+				this.root = this
+
+				return this
+
+			}
+
+			walk(callback) {
+
+				callback(this)
+
+				let node = this.first
+
+				while (node) {
+
+					node.walk(callback)
+
+					node = node.next
+
+				}
+
+				return this
+
+			}
+
+			reduce(array = []) {
+
+				array.push(this)
+
+				let node = this.first
+
+				while (node) {
+
+					node.reduce(array)
+
+					node = node.next
+
+				}
+
+				return array
+
+			}
+
+			reduceParent() {
+
+				let array = []
+				let node = this.parent
+
+				while (node) {
+
+					array.unshift(node)
+					node = node.parent
+
+				}
+
+				return array
+
+			}
+
+			graphLine() {
+
+				let intro = this.reduceParent().map(node => node.next ? '│ ' : '  ').join('')
+
+				let link = (!this.parent ? (this.next ? '┌' : '─') : (this.next ? '├' : '└')) + '─' + (this.first ? '┬' : '─')
+
+				let info = `─ Node#${this.uid} { ${this.data} }`
+
+				return intro + link + info
+
+			}
+
+			graph() {
+
+				return this.reduce().map(node => node.graphLine()).join('\n')
+
+			}
+
+		}
+
+
+
+
+
+
+		// create trees
+
+		let root1 = new Node1('root1')
+		let root2 = new Node2('root2')
+
+		for (let letter of 'abcd') {
+
+			let n1 = new Node1(letter)
+			root1.append(n1)
+
+			let n2 = new Node2(letter)
+			root2.append(n2)
+
+			for (let letter of 'ABCD') {
+
+				let N1 = new Node1(letter)
+				n1.append(N1)
+
+				let N2 = new Node2(letter)
+				n2.append(N2)
+
+				for (let letter of 'xyz') {
+
+					let _N1 = new Node1(letter)
+					N1.append(_N1)
+
+					let _N2 = new Node2(letter)
+					N2.append(_N2)
+
+				}
+
+			}
+
+		}
+
+
+		fn_array = () => root1.walk(node => node.data)
+		fn_props = () => root2.walk(node => node.data)
+
+		// bench(fn_array, fn_props)
+
+		let wreck = () => {
+
+			let prng = PRNG()
+
+			let min = 1
+			let max = root1.total
+
+			let index = Math.floor(prng.float({ min, max }))
+
+			let n1 = root1.reduce()[index]
+			let n2 = root2.reduce()[index]
+
+		}
+
+		wreck()
+
+
+        </script>
+
+		<p>No significant difference between Array and props</p>
+    </body>
+</html>
