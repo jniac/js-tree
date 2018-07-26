@@ -108,10 +108,6 @@ class Node {
 
 			this.parent.remove(this)
 
-		} else {
-
-			// detach from sibling
-
 		}
 
 		return this
@@ -131,6 +127,8 @@ class Node {
 			child = child.next
 
 		}
+
+		return this
 
 	}
 
