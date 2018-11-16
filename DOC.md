@@ -36,8 +36,8 @@
 
 *utils*
 ```
-.printLine()           // "  │ └─── Node#2 {}"   
-.print()
+.toGraphStringLine()           // "  │ └─── Node#2 {}"   
+.toGraphString()
 ```
 
 ```

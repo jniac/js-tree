@@ -41,7 +41,7 @@ root.walk(node => ...)
 
 - graph string preview:
 ```javascript
-console.log(node.print())
+console.log(node.toGraphString())
 
 /* something in the following form:
 
@@ -94,7 +94,7 @@ for (let child of n1)
 
 */
 
-console.log(n1.print())
+console.log(n1.toGraphString())
 
 /* output:
 
@@ -112,7 +112,7 @@ more complex graph (drawing hierarchy test):
 n2.append(new Node().append(new Node()).append(new Node().append(new Node().append(new Node())).append(new Node()).append(new Node().append(new Node()))))
 n2.append(new Node(), new Node(), new Node())
 
-console.log(n1.print())
+console.log(n1.toGraphString())
 
 /* ouput:
 

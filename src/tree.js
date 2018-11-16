@@ -218,27 +218,22 @@ class Node {
 
 
 
-	// print:
+	// toGraphString:
 
-	printLine() {
+	toGraphStringLine() {
 
 		let intro = []
 
 		for (let parent of this.allParents())
 			intro.unshift(parent.next ? '│ ' : '  ')
 
-		return intro.join('') + (!this.parent ? (this.next ? '┌' : '─') : (this.next ? '├' : '└')) + '─' + (this.firstChild ? '┬' : '─') + '─ Node#' + this.uid + ' {}'
+		return intro.join('') + (!this.parent ? (this.next ? '┌' : '─') : (this.next ? '├' : '└')) + '─' + (this.firstChild ? '┬' : '─') + '─ Node#' + this.uid
 
 	}
 
-	print() {
+	toGraphString() {
 
-		let lines = [this.printLine()]
-
-		for (let child of this.allChildren())
-			lines.push(child.printLine())
-
-		return lines.join('\n')
+		return [this, ...this.allChildren()].map(node => node.toGraphStringLine()).join('\n')
 
 	}
 

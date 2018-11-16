@@ -60,14 +60,14 @@ n3.appendTo(n2)
 for (let child of n1)
   console.log(child.name)
 
-console.log(n1.print())
+console.log(n1.toGraphString())
 
 n2.append(new Node().append(new Node()).append(new Node().append(new Node().append(new Node())).append(new Node()).append(new Node().append(new Node()))))
 n2.append(new Node(), new Node(), new Node())
 
-n1.walk(node => console.log('walk', node.printLine()))
+n1.walk(node => console.log('walk', node.toGraphStringLine()))
 
-console.log(n1.print())
+console.log(n1.toGraphString())
 
 console.log('n3.isContainedBy(n1)', n3.isContainedBy(n1))
 console.log('n1.isContainedBy(n3)', n1.isContainedBy(n3))
@@ -76,7 +76,7 @@ console.log('n3.contains(n1)', n3.contains(n1))
 
 n1.removeAll()
 
-console.log(n1.print())
+console.log(n1.toGraphString())
 
 Object.assign(window, {
 
