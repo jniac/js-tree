@@ -146,7 +146,8 @@ class Node {
 
 	}
 
-	isParentOf(node) {
+	// https://developer.mozilla.org/en-US/docs/Web/API/Node/contains
+	contains(node) {
 
 		while (node) {
 
@@ -161,9 +162,9 @@ class Node {
 
 	}
 
-	isChildOf(node) {
+	isContainedBy(node) {
 
-		return node.isParentOf(this)
+		return node.contains(this)
 
 	}
 

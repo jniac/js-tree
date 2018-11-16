@@ -23,7 +23,7 @@
 *test*
 ```
 .isDetached()
-.isParentOf(node)
+.contains(node)
 .isChildOf(node)
 ```
 
