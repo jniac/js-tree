@@ -194,8 +194,7 @@ class Node {
 
 			yield child
 
-			for (let grandChild of child.allChildren())
-				yield grandChild
+			yield* child.allChildren()
 
 			child = child.next
 
