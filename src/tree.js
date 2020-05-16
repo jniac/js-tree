@@ -164,7 +164,7 @@ class Node {
 
 	}
 
-	isContainedBy(node) {
+	isContainedIn(node) {
 
 		return node.contains(this)
 
