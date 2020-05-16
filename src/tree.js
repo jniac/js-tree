@@ -9,9 +9,11 @@ class Node {
 
 		this.root = this
 
-		Object.assign(this, props)
+		Object.assign(this, { props })
 
 	}
+
+	get name() { return this.props && this.props.name || `Node#${this.uid}` }
 
 	append(...children) {
 
@@ -227,7 +229,9 @@ class Node {
 		for (let parent of this.allParents())
 			intro.unshift(parent.next ? '│ ' : '  ')
 
-		return intro.join('') + (!this.parent ? (this.next ? '┌' : '─') : (this.next ? '├' : '└')) + '─' + (this.firstChild ? '┬' : '─') + '─ Node#' + this.uid
+		return intro.join('') +
+			(!this.parent ? (this.next ? '┌' : '─') : (this.next ? '├' : '└')) +
+			'─' + (this.firstChild ? '┬' : '─') + '─ ' + this.name
 
 	}
 
